@@ -6,7 +6,8 @@ class ContactDetail extends Component{
         super(props);
         this.goBack = this.goBack.bind(this);
         this.goEdit = this.goEdit.bind(this);
-             
+        this.deleteItem= this.deleteItem.bind(this);
+        this.getCookie= this.getCookie.bind(this); 
     }
 
     goEdit(){
@@ -17,30 +18,41 @@ class ContactDetail extends Component{
         this.props.changeViewToList()
     }
 
-    /*
-    displayJSON() {
+    getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
-        
-        var mainContainer = document.getElementById("myData");
-        var data = this.props.data;
-
-        var divMobile = document.createElement("divMobile");
-        divMobile.innerHTML = "Personal"+ ' ' + data['Mobile'];
-        mainContainer.appendChild(divMobile);
-
-        var divWork = document.createElement("divWork");
-        divMobile.innerHTML = "Work"+ ' ' + data['Work'];
-        mainContainer.appendChild(divWork);
-
-        var divOther = document.createElement("divOther");
-        divMobile.innerHTML = "Other"+ ' ' + data['Other'];
-        mainContainer.appendChild(divOther);
+    deleteItem(){
+        var csrftoken = this.getCookie('csrftoken');
+        var id = this.props.data.id;
     
-    }*/
+        fetch(`http://127.0.0.1:8000/api/contact_delete/${id}/`, {
+          method:'DELETE',
+          headers:{
+            'Content-type':'application/json',
+            'X-CSRFToken':csrftoken,
+          },
+        }).then((response) =>{
+            console.log("REQUEST TO DELETE ITEM")
+          this.goBack();
+        })
+    }
+    
 
     render() {
-        /*var phones = this.props.data.phones;
-        var emails = this.props.data.emails;*/
+
         return(
 
             
@@ -61,6 +73,7 @@ class ContactDetail extends Component{
                                     
                         <div align="right">
                             <button onClick={this.goEdit} className="btn btn-outline-warning">Edit Contact</button>
+                            <button onClick={this.deleteItem} className="btn btn-outline-danger"> Delete </button>
                         </div>
                     
                     </div>

@@ -24,17 +24,16 @@ class App extends React.Component {
         },
 
         editing:false,
+        cookieValue: null
       }
       this.fetchContacs = this.fetchContacts.bind(this)
       this.changeViewToDetail = this.changeViewToDetail.bind(this)
       this.changeViewToList = this.changeViewToList.bind(this)
       this.changeViewToForm = this.changeViewToForm.bind(this)
       this.changeEditableDetail=this.changeEditableDetail.bind(this)
+
       
   };
-
-
-
 
 
   componentWillMount(){
@@ -117,7 +116,7 @@ class App extends React.Component {
               dataCurrentContact={this.changeViewToDetail.bind(this)} 
               changeViewToForm={this.changeViewToForm.bind(this)}
               data={contactList}>
-
+              
           </ContactList> : null}
 
           {this.state.activeState === 'ContactView' ? 
@@ -131,7 +130,7 @@ class App extends React.Component {
           <ContactForm      
             changeViewToList={this.changeViewToList.bind(this)}
             data={this.state.activeItem}
-            editing={this.editing}>
+            editing={this.state.editing}>
 
           </ContactForm> : null}
 

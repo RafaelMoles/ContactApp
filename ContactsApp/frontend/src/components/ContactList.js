@@ -9,12 +9,12 @@ class ContactList extends Component{
                 showInfo: false
             }
             this.sendContact = this.sendContact.bind(this)
-            this.goForm = this.goForm.bind(this)     
+            this.goForm = this.goForm.bind(this) 
+
     }
 
-    
     componentWillMount(){
-        
+   
     }
     
     sendContact(contact){
@@ -24,7 +24,7 @@ class ContactList extends Component{
     goForm(){
         this.props.changeViewToForm()
     }
-    
+
 
     render() {
         console.log(this.props);
@@ -49,14 +49,10 @@ class ContactList extends Component{
     
                     <div id="list-wrapper">
                         {this.props.data.map(function(contact, index){
-                            
-                            
-                            var contIndex= "contact "+ index;
-                            var contIndex= "infoContact "+ index;
-
+                        
                             return(
                                 
-                                <div id={contIndex}
+                                <div id={index}
                                     onClick={()=> self.sendContact(contact)}
                                     key={index} 
                                     className="task-wrapper flex-wrapper">
@@ -69,12 +65,7 @@ class ContactList extends Component{
                                         <span>{contact.firstName} {contact.lastName}</span>
                                     </div>
                 
-                                    <div style={{flex:1}}>
-                                        <button className="btn btn-outline-danger">Delete</button>
-                                    </div>
-
-                                    <div id={contIndex}></div>
-            
+                                                
                                 </div>
             
 

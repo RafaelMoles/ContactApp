@@ -5,16 +5,7 @@ class ContactForm extends Component{
     constructor(props){
         super(props);
         this.state = {
-            editing: false,
-
-            newContact:{
-                id:null, 
-                firstName:'',
-                lastName:'',
-                organization:'',
-                phone: '',
-                email: ''
-            }
+            newContact: this.props.data
         }
         this.goBack= this.goBack.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -49,12 +40,13 @@ class ContactForm extends Component{
         var csrftoken = this.getCookie('csrftoken')
     
         var url = 'http://127.0.0.1:8000/api/contact_create/'
-    
-        if(this.state.editing == true){
-          url = `http://127.0.0.1:8000/api/contact_update/${ this.state.newContact.id}/`
-          this.setState({
-            editing:false
-          })
+        
+        
+        console.log("Aii no");
+        if(this.props.editing === true){
+          url = `http://127.0.0.1:8000/api/contact_update/${ this.props.data.id}/`
+          console.log("TRUE");
+
         }
     
     
@@ -89,6 +81,7 @@ class ContactForm extends Component{
 
     render(){
 
+        var DataField= this.props.data;
         return(
 
             <div className="Container">
@@ -111,29 +104,29 @@ class ContactForm extends Component{
                             <div class="form-group">
                                 <label for="exampleInputEmail1">First Name</label>
                                 <input onChange={(e) => this.setState({ newContact:{...this.state.newContact, firstName: e.target.value}
-                                })} type="FName" class="form-control" id="InpFName" value={this.state.newContact.firstName} aria-describedby="emailHelp" type="text" placeholder=""></input>
+                                })} type="FName" class="form-control" id="InpFName" placeholder={DataField.firstName}></input>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Last Name</label>
                                 <input onChange={(e) => this.setState({ newContact:{...this.state.newContact, lastName: e.target.value}
-                                })} type="LName" class="form-control" id="InpSName" placeholder=""></input>
+                                })} type="LName" class="form-control" id="InpSName" placeholder={DataField.lastName}></input>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Organization</label>
                                 <input onChange={(e) => this.setState({ newContact:{...this.state.newContact, organization: e.target.value}
-                                })}  type="Org" class="form-control" id="InpOrg" placeholder=""></input>
+                                })}  type="Org" class="form-control" id="InpOrg" placeholder={DataField.organization}></input>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Phone Number</label>
                                 <input onChange={(e) => this.setState({ newContact:{...this.state.newContact, phone: e.target.value}
-                                })} type="phone" class="form-control" id="InpPhone" placeholder=""></input>
+                                })} type="phone" class="form-control" id="InpPhone" placeholder={DataField.phone}></input>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Email</label>
                                 <input onChange={(e) => this.setState({ newContact:{...this.state.newContact, email: e.target.value}
-                                })} type="email" class="form-control" id="InpEmail" placeholder=""></input>
+                                })} type="email" class="form-control" id="InpEmail" placeholder={DataField.email}></input>
                             </div>
-                            <button type="submit" class="btn btn-primary">Create Contact</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                             
                         </form>
                     </div>
